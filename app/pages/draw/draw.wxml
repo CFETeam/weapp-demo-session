@@ -1,5 +1,5 @@
 <view class="root">
-    <canvas class="paper" canvas-id="paper" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" style=""></canvas>
+    <canvas class="paper" canvas-id="paper" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd"></canvas>
     <view class="color-picker">
         <view
             wx:for-items="{{colors}}"

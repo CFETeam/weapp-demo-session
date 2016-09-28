@@ -10,15 +10,16 @@ Page({
 
         paintColor: '#666666',
 
-        // 是否显示loading
+        lastActions: [],
+
         showLoading: false,
 
-        // loading提示语
         loadingMessage: '',
     },
 
     onLoad({ paintId }) {
         const selectedPaint = app.globalData.selectedPaint;
+
         if (selectedPaint) {
             this.paintId = selectedPaint.id;
             this.updateCanvas(selectedPaint.actions);
@@ -28,9 +29,8 @@ Page({
     },
 
     chooseColor(event) {
-        this.setData({
-            paintColor: event.currentTarget.dataset.color
-        });
+        let paintColor = event.currentTarget.dataset.color;
+        this.setData({ paintColor });
     },
 
     onTouchStart({ touches }) {
@@ -49,8 +49,10 @@ Page({
         context.save();
         context.moveTo(...start);
         moves.forEach(move => context.lineTo(...move));
+
         console.log(this.data.paintColor);
         context.setStrokeStyle(this.data.paintColor);
+
         context.setLineWidth(5);
         context.stroke();
         context.restore();
@@ -59,16 +61,16 @@ Page({
         this.updateCanvas(this.lastActions);
     },
 
-    onTouchEnd({ touches }) {
+    onTouchEnd() {
+        const id = this.paintId;
+        const actions = JSON.stringify(this.lastActions);
+
         wx.showNavigationBarLoading();
 
         request({
             url: `https://${config.host}${config.basePath}/paints/save`,
-            method: "post",
-            data: {
-                id: this.paintId,
-                actions: JSON.stringify(this.lastActions)
-            },
+            method: 'post',
+            data: { id, actions },
 
             success(result) {
                 console.log(result);
@@ -81,9 +83,6 @@ Page({
     },
 
     updateCanvas(actions) {
-        wx.drawCanvas({
-            canvasId: 'paper',
-            actions
-        });
+        wx.drawCanvas({ canvasId: 'paper', actions });
     },
 });

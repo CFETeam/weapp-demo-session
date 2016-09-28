@@ -2,16 +2,17 @@ const request = require('../../lib/session-request.js');
 const config = require('../../config.js');
 
 const app = getApp();
+
 Page({
     data: {
         contextOpen: false,
 
+        paintIdInContext: '',
+
         paints: [],
 
-        // 是否显示loading
         showLoading: false,
 
-        // loading提示语
         loadingMessage: '',
     },
 
@@ -24,13 +25,15 @@ Page({
 
         request({
             url: `https://${config.host}${config.basePath}/paints/list`,
-            method: "GET",
+            method: 'GET',
+
             success: ({ data: { data: paints } }) => {
                 if (paints) {
                     paints.forEach(paint => paint.actions = JSON.parse(paint.actions));
                     this.updatePaints(paints);
                 }
             },
+
             complete: () => {
                 this.hideLoading();
             }
@@ -40,69 +43,86 @@ Page({
     updatePaints(paints) {
         this.setData({ paints });
 
-        paints.forEach(paint => {
-            const context = wx.createContext();
+        const context = wx.createContext();
 
+        paints.forEach((paint, index) => {
             context.save();
             context.clearRect(0, 0, 5000, 5000);
             context.scale(0.333, 0.333);
 
-            let actions = context.getActions().concat(paint.actions);
+            let actions = [...context.getActions(), ...paint.actions];
+
             context.restore();
-            actions = actions.concat(context.getActions());
+            actions.push(...context.getActions());
 
             setTimeout(() => {
-                wx.drawCanvas({
-                    canvasId: 'paint-' + paint.id,
-                    actions
-                });
-            });
+                wx.drawCanvas({ canvasId: 'paint-' + paint.id, actions });
+            }, (index + 1) * 150);
         });
     },
 
-    openPaint(e) {
-        const paintId = e.currentTarget.dataset.paintId;
-        if (this.data.paints) {
-            app.globalData.selectedPaint = this.data.paints.find(x => x.id === paintId);
+    openPaint(event) {
+        if (this.data.contextOpen) {
+            return;
         }
-        if (this.data.contextOpen) return;
 
-        // clear paints
-        this.updatePaints([]);
+        const paints = this.data.paints;
+        const paintId = event.currentTarget.dataset.paintId;
 
-        setTimeout(() => wx.navigateTo({ url: '../draw/draw' }), 100);
+        if (paintId) {
+            app.globalData.selectedPaint = paints.find(paint => paint.id === paintId);
+            console.log('edit paint => ', app.globalData.selectedPaint);
+        } else {
+            app.globalData.selectedPaint = void(0);
+            console.log('create new paint...');
+        }
+
+        wx.navigateTo({ url: '../draw/draw' })
     },
 
-    openContext() {
-        this.setData({ contextOpen: true });
+    openContext(event) {
+        const paintIdInContext = event.currentTarget.dataset.paintId;
+        this.setData({ contextOpen: true, paintIdInContext });
     },
 
-    onContextChange(event) {
+    onContextChange() {
+        this.setData({ contextOpen: false, paintIdInContext: '' });
+    },
+
+    onDelete() {
+        const id = this.data.paintIdInContext;
+        console.log('deleting paint id =>', id);
+
         this.setData({ contextOpen: false });
-    },
-
-    onDelete({ currentTarget }) {
-        const selected = app.globalData.selectedPaint;
-        this.setData({ contextOpen: false });
+        this.showLoading('正在删除中…');
 
         request({
             url: `https://${config.host}${config.basePath}/paints/delete`,
-            method: "POST",
-            data: {
-                id: selected.id
-            },
+            method: 'POST',
+            data: { id },
+
             success: () => {
-                this.loadPaints();
-            }
+                let paints = this.data.paints;
+
+                let index = paints.findIndex(paint => paint.id === id);
+                console.log('delete index =>', index);
+
+                if (~index) {
+                    paints.splice(index, 1);
+                    this.updatePaints(paints);
+                }
+            },
+
+            complete: () => {
+                this.hideLoading();
+            },
         });
     },
 
-    // 显示loading提示
     showLoading(loadingMessage) {
         this.setData({ showLoading: true, loadingMessage });
     },
 
-    // 隐藏loading提示
     hideLoading() {
         this.setData({ showLoading: false, loadingMessage: '' });
     },
