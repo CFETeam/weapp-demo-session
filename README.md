@@ -66,11 +66,11 @@ nginx
 
 ### 5. 配置云存储 Redis
 
-会话管理依赖 Redis 进行作为缓存管理，开发者可以选择自行搭建 Redis 服务或者直接购买[云存储 Redis 服务](https://buy.qcloud.com/buy/redis?utm_source=jiaocheng&utm_medium=redis&utm_campaign=qcloud)。
+会话管理依赖 Redis 进行作为缓存管理，开发者可以选择自行搭建 Redis 服务或者直接购买[云存储 Redis 服务](https://buy.qcloud.com/buy/redis?utm_source=jiaocheng&utm_medium=redis-purchase&utm_campaign=qcloud)。
 
 ### 6. 配置云数据库 MongoDB
 
-一笔到底小程序使用 MongoDB 来存储用户绘制的图像路径，要运行小程序开发者需要自行搭建 MongoDB 服务或者直接购买[云数据库 MongoDB](https://buy.qcloud.com/mongodb?utm_source=jiaocheng&utm_medium=mongo&utm_campaign=qcloud)。
+一笔到底小程序使用 MongoDB 来存储用户绘制的图像路径，要运行小程序开发者需要自行搭建 MongoDB 服务或者直接购买[云数据库 MongoDB](https://buy.qcloud.com/mongodb?utm_source=jiaocheng&utm_medium=mongodb-purchase&utm_campaign=qcloud)。
 
 ### 7. 启动一笔到底示例 Node 服务
 
