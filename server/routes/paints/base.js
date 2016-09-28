@@ -1,4 +1,4 @@
-const RouterBase = require('../../../common/routerbase');
+const RouterBase = require('../../common/routerbase');
 
 class PaintsBase extends RouterBase {
     constructor() {

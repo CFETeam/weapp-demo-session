@@ -1,5 +1,5 @@
 const co = require('co');
-const PaintsBase = require('./base');
+const PaintsBase = require('../base');
 const mongo = require('../../../libs/mongo');
 
 class ListPaints extends PaintsBase {
@@ -17,7 +17,7 @@ class ListPaints extends PaintsBase {
                 db = yield mongo.connect();
 
                 let paints = db.collection('paints');
-                let doc = yield paints.find({ openId }).toArray();
+                let doc = yield paints.find({ openId }, { _id: 0, openId: 0 }).toArray();
 
                 this.success(doc);
 

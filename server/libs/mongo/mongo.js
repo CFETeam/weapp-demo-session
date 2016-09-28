@@ -5,6 +5,10 @@ const { mongoConfig } = require('../../config');
 const { username, password, host, port, query, database } = mongoConfig;
 const url = `mongodb://${username}:${password}@${host}:${port}/${database}${query}`;
 
+console.log('========================================');
+console.log('MONGO_CONNECT_URL =>', url);
+console.log('========================================\n');
+
 exports.connect = co.wrap(function *() {
     let db = null;
 
@@ -12,7 +16,7 @@ exports.connect = co.wrap(function *() {
         db = yield MongoClient.connect(url);
         return db;
     } catch (err) {
-        console.error({ error });
+        console.error({ err });
         db && db.close();
         throw err;
     }

@@ -1,5 +1,5 @@
 const co = require('co');
-const PaintsBase = require('./base');
+const PaintsBase = require('../base');
 const mongo = require('../../../libs/mongo');
 
 class DeletePaints extends PaintsBase {
