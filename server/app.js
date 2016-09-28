@@ -2,6 +2,7 @@ require('./globals');
 
 const http = require('http');
 const express = require('express');
+const _ = require('lodash');
 const weappSession = require('weapp-session');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -17,7 +18,8 @@ app.set('trust proxy', true);
 
 app.disable('x-powered-by');
 
-app.use(weappSession(config.sessionConfig));
+// 使用会话管理
+app.use(weappSession(_.pick(config, ['appId', 'appSecret', 'redisConfig'])));
 
 // 记录请求日志
 app.use(morgan('tiny'));
