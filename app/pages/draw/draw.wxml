@@ -1,0 +1,13 @@
+<view class="root">
+    <canvas class="paper" canvas-id="paper" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" style=""></canvas>
+    <view class="color-picker">
+        <view
+            wx:for-items="{{colors}}"
+            wx:for-item="color"
+            class="color-item {{paintColor == color ? 'selected' : ''}}"
+            data-color="{{color}}"
+            style="background-color: {{color}}"
+            bindtap="chooseColor">
+        </view>
+    </view>
+</view>

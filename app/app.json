@@ -1,0 +1,13 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/list/list",
+        "pages/draw/draw"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#f0f0f0",
+        "navigationBarTitleText": "一笔到底",
+        "navigationBarTextStyle": "black"
+    }
+}

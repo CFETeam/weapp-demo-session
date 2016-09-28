@@ -1,0 +1,33 @@
+.root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #f0f0f0;
+}
+
+.item {
+    display: block;
+    float: left;
+    width: 6rem;
+    height: 8.67rem;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+.item .paper {
+    background: white;
+    width: 6rem;
+    height: 8.67rem;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.5)
+}
+
+.item.new {
+    text-align: center;
+}
+.item .add {
+    color: #888;
+    font-size: 6rem;
+    line-height: 8.67rem;
+}

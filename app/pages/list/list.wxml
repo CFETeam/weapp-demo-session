@@ -1,0 +1,15 @@
+<scroll-view class="root" scroll-y>
+    <view class="new item" bindtap="openPaint">
+        <text class="add">+</text>
+    </view>
+    <view class="item" wx:for-items="{{paints}}" wx:for-item="paint" bindtap="openPaint" bindlongtap="openContext" data-paint-id="{{paint.id}}">
+        <canvas class="paper" canvas-id="paint-{{paint.id}}"></canvas>
+    </view>
+</scroll-view>
+
+<action-sheet hidden="{{!contextOpen}}" bindchange="onContextChange">
+    <action-sheet-item bindtap="onDelete" style="color: #e64340;" data-action="delete">删除</action-sheet-item>
+    <action-sheet-cancel>取消</action-sheet-cancel>
+</action-sheet>
+
+<loading hidden="{{!showLoading}}" bindchange="hideLoading">{{loadingMessage}}</loading>
