@@ -53,7 +53,7 @@ const buildHeader = co.wrap(function *() {
 function requestWithSession(options = {}) {
     let tryTimes = 0;
 
-    const wrapRequest = co.wrap(function * () {
+    const wrapRequest = co.wrap(function *() {
         const { success, fail, complete } = options;
 
         const callSuccess = (...params) => {
