@@ -2,7 +2,7 @@
     <view class="new item" bindtap="openPaint">
         <text class="add">+</text>
     </view>
-    <view class="item" wx:for-items="{{paints}}" wx:for-item="paint" bindtap="openPaint" bindlongtap="openContext" data-paint-id="{{paint.id}}">
+    <view class="item" wx:for-items="{{paints}}" wx:key="id" wx:for-item="paint" bindtap="openPaint" bindlongtap="openContext" data-paint-id="{{paint.id}}">
         <canvas class="paper" canvas-id="paint-{{paint.id}}"></canvas>
     </view>
 </scroll-view>

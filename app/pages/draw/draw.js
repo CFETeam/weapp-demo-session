@@ -34,13 +34,13 @@ Page({
     },
 
     onTouchStart({ touches }) {
-        const { clientX, clientY } = touches[0];
-        this.movements = [[clientX, clientY]];
+        const { x, y } = touches[0];
+        this.movements = [[x, y]];
     },
 
     onTouchMove({ touches }) {
-        const { clientX, clientY } = touches[0];
-        this.movements.push([clientX, clientY]);
+        const { x, y } = touches[0];
+        this.movements.push([x, y]);
 
         const [start, ...moves] = this.movements;
 

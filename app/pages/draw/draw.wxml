@@ -3,6 +3,7 @@
     <view class="color-picker">
         <view
             wx:for-items="{{colors}}"
+            wx:key="*this"
             wx:for-item="color"
             class="color-item {{paintColor == color ? 'selected' : ''}}"
             data-color="{{color}}"
